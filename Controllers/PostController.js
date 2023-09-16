@@ -37,3 +37,43 @@ exports.createPost = (req,res) => {
     }
 
 };
+
+
+exports.getPostById = (req,res) =>{
+    try{
+
+        let {id} = req.params;
+        
+
+        const requiredFields =["id"];
+
+        errorMessage = getErors(req.params,requiredFields);
+
+
+        if(errorMessage){
+            return res.status(500).send(errorMessage);
+        }
+
+        const sql = 'select * from posts where id = (?)';
+        const values=[id];
+
+        db.query(sql,values, async (err,results) =>{
+            if(err){
+                console.error(err);
+                return res.status(500).send(err);
+            }
+            if(results.length == 0){
+                console.log("No results found");
+                return res.status(500).send(JSON.stringify({"message":"No results found"}));
+            }
+            console.log(results);
+
+            return res.status(200).send(results);
+        });
+
+
+    }
+    catch(err){
+        return res.status(500).send(err);
+    }
+};

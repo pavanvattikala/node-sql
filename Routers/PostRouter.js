@@ -12,4 +12,6 @@ const router = express.Router();
 
 router.post('/create_post',AuthMiddleware,PostController.createPost);
 
+router.get('/get_post/:id',PostController.getPostById);
+
 module.exports = router;
