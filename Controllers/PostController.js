@@ -96,3 +96,36 @@ exports.getPosts = async (req,res) =>{
     return res.status(500).send(err);
  } 
 }
+
+exports.updatePost = async (req,res) => {
+    try{
+        const {id,postTitle,postBody,postFooter} = req.body;
+
+        const requiredFields =["id","postTitle","postBody","postFooter"];
+
+        errorMessage = getErors(req.body,requiredFields);
+
+
+        if(errorMessage){
+            return res.status(500).send(errorMessage);
+        }
+
+
+        const sql = 'update posts set postTittle=?, postBody=?,postFooter=? where id=?';
+        
+        const values =[postTitle,postBody,postFooter,id];
+
+        db.query(sql,values,(err,values) => {
+            if(err){
+                console.error(err);
+                res.status(500).send(err);
+            }
+            res.status(200).send(JSON.stringify({"Message":"Values Updated Sucessfully","Updated":values}));
+        });
+
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).send(err);
+    }
+}

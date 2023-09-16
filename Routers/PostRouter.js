@@ -17,4 +17,7 @@ router.post('/get_posts',AuthMiddleware,PostController.getPosts);
 
 router.get('/get_post/:id',PostController.getPostById);
 
+router.post('/update_post/:id',AuthMiddleware,PostController.updatePost);
+
+
 module.exports = router;
