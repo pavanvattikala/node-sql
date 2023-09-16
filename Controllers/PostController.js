@@ -77,3 +77,22 @@ exports.getPostById = (req,res) =>{
         return res.status(500).send(err);
     }
 };
+
+exports.getPosts = async (req,res) =>{
+ try{
+    const sql = 'select * from posts';
+
+    db.query(sql,(err,results)=>{
+        if(err){
+            console.error(err);
+            res.status(500).send(err);
+        }
+        res.status(200).send(JSON.stringify(results));
+    });
+    
+ }
+ catch(err){
+    console.error(err);
+    return res.status(500).send(err);
+ } 
+}

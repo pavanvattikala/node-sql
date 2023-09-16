@@ -12,6 +12,9 @@ const router = express.Router();
 
 router.post('/create_post',AuthMiddleware,PostController.createPost);
 
+router.post('/get_posts',AuthMiddleware,PostController.getPosts);
+
+
 router.get('/get_post/:id',PostController.getPostById);
 
 module.exports = router;
